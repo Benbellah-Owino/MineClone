@@ -1,52 +1,38 @@
 #include <iostream>
-#include "include/glad/glad.h"
-#include "include/GLFW/glfw3.h"
-#include "include/glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
 
+#include "core/Window.h"
 
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+#include "glm/glm.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
+int main()
+{
 
-int main(){
-    GLFWwindow* window;
+    Window window(1080, 784, "MineClone");
 
-    /* Initialize the library */
-    if (!glfwInit())
-        return -1;
+    // Example glm usage
+    glm::vec3 pos(1.0f, 2.0f, 3.0f);
+    glm::vec3 dir(0.0f, 0.0f, -1.0f);
+    glm::vec3 result = pos + dir;
 
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        return -1;
-    }
-
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
-
-
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        std::cerr << "Failed to initialize GLAD \n";
-        return -1;
-    }https://github.com/g-truc/glm/archive/refs/heads/master.zip
-
-    glm::vec3 pos(1.0f, 2.0f, 3.0f); 
-
+    std::cout << "Result: "
+              << result.x << ", "
+              << result.y << ", "
+              << result.z << std::endl;
 
     /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
+    while (!window.shouldClose())
     {
+        window.pollEvents();
+
+        window.eventHandler(); // Handles frequent keypresses like movement keys
+
+        window.clearScreen(); //Clear the scren
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        /* Swap front and back buffers */
-        glfwSwapBuffers(window);
-
-        /* Poll for and process events */
-        glfwPollEvents();
+        window.swapBuffers();
     }
 
-    glfwTerminate();
     return 0;
 }
