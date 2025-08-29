@@ -1,5 +1,7 @@
 #include "Window.h"
+#include "Input.h"
 #include "iostream"
+
 
 Window::Window(int width, int height, const std::string &title)
 {
@@ -25,7 +27,6 @@ Window::Window(int width, int height, const std::string &title)
     glfwMakeContextCurrent(m_window);
     glfwSetWindowUserPointer(m_window, this);
 
-    glfwSetKeyCallback(m_window, keyCallback);
     glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Load OpenGL functions with GLAD
@@ -36,6 +37,10 @@ Window::Window(int width, int height, const std::string &title)
         glfwTerminate();
         m_window = nullptr;
     }
+
+
+    // Initialize input with our window
+    Input::init(m_window);
 }
 
 Window::~Window()
@@ -80,52 +85,40 @@ void Window::clearScreen()
 void Window::eventHandler()
 {
 
-    if (isKeyPressed(GLFW_KEY_W))
+    if (Input::isKeyDown(GLFW_KEY_W))
     {
         // Move forward
-        std::cout<< "^" << std::endl;
+        std::cout<< "W pressed this frame" << std::endl;
     }
-    if ( isKeyPressed(GLFW_KEY_S))
+    if ( Input::isKeyDown(GLFW_KEY_S))
     {
         // Move backward
-        std::cout<< "|" << std::endl;
+        std::cout<< "S pressed this frame" << std::endl;
     }
-    if (isKeyPressed(GLFW_KEY_A))
+
+    if (Input::isKeyDown(GLFW_KEY_A))
     {
         // Move left
-        std::cout<< "<" << std::endl;
+        std::cout<< "A pressed this frame" << std::endl;
     }
-    if (isKeyPressed(GLFW_KEY_W))
+
+    if (Input::isKeyDown(GLFW_KEY_D))
     {
         // Move right
-        std::cout<< ">" << std::endl;
+        std::cout<< "D pressed this frame" << std::endl;
+    }
+
+    if(Input::isKeyPressed(GLFW_KEY_SPACE)){
+        std::cout<< "Space is being held" << std::endl;
+    }
+
+    if(Input::isKeyPressed(GLFW_KEY_ESCAPE)){
+        std::cout<< "Escape released -> quitting" << std::endl;
+        Window* win = static_cast<Window*>(glfwGetWindowUserPointer(m_window));
+        glfwSetWindowShouldClose(m_window, true);
     }
 }
 
 
-// Handles rare key presses when they happen
-void Window::keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
-{
-    Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-    {
-        glfwSetWindowShouldClose(window, true);
-    }
 
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
-    {
-        // jump
-    }
 
-    // Example
-    if(win){
-        if(action == GLFW_PRESS){
-            std::cout << "Key pressed: " << key << std::endl;
-        }
-    }
-}
-
-void Window::mouseCallback(GLFWwindow *window, double xpos, double ypos)
-{
-    // Use xpos, ypos for camera rotation
-}

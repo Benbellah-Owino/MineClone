@@ -19,6 +19,4 @@ class Window{
 
     private:
         GLFWwindow* m_window;
-        static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-        static void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 };

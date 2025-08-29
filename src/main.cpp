@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "core/Window.h"
+#include "core/Input.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -29,9 +30,11 @@ int main()
 
         window.eventHandler(); // Handles frequent keypresses like movement keys
 
-        window.clearScreen(); //Clear the scren
+        window.clearScreen(); // Clear the scren
         /* Render here */
         window.swapBuffers();
+
+        Input::update();
     }
 
     return 0;
