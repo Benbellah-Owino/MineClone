@@ -95,7 +95,6 @@ public:
             Position += Right * velocity;
     }
 
-
 private:
     void updateCameraVectors()
     {

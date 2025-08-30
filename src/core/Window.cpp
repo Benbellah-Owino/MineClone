@@ -29,7 +29,6 @@ Window::Window(int width, int height, const std::string &title)
     glfwMakeContextCurrent(m_window);
     glfwSetWindowUserPointer(m_window, this);
 
-    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Load OpenGL functions with GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
