@@ -15,6 +15,8 @@ Window::Window(int width, int height, const std::string &title)
 
     /* Create a windowed mode window and its OpenGL context */
     m_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+    Dimensions.height = height;
+    Dimensions.width = width;
 
     if (!m_window)
     {
@@ -74,6 +76,17 @@ bool Window::isKeyPressed(int key) const
 {
     return glfwGetKey(m_window, key) == GLFW_PRESS;
 }
+
+int Window::getWidth() const
+{
+    return Dimensions.width;
+}
+
+int Window::getHeight() const
+{
+    return Dimensions.height;
+}
+
 
 void Window::clearScreen()
 {

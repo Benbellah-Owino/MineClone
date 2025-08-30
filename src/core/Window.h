@@ -14,9 +14,15 @@ class Window{
         void eventHandler();
         bool shouldClose() const;
         bool isKeyPressed(int key) const;
+        int getWidth() const;
+        int getHeight() const;
 
         GLFWwindow* getNativeWindow() const {return m_window;};
 
     private:
         GLFWwindow* m_window;
+        struct {
+            int width;
+            int height;
+        } Dimensions;
 };
